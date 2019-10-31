@@ -22,15 +22,21 @@ people get a total idea of a developer that, how capable he is.
 ## Technology
 
 ### Frontend
+
 * **1.HTML** *
+
 * **2.CSS** **
+
 * **3.Javasctript** *
+
 * **4.Bootstrap** *
 
 ### Backend
+
 * **1.Node js** *
 
 ### CRUD operation
+
 * **1.MongoDB** *
 
 ## Plan for project
