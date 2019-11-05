@@ -227,7 +227,6 @@
   width: 180%;
 }
 
-
 /*                        Section 4                         */
 
 .section_4 .services h1 {
@@ -278,6 +277,10 @@
     
 }
 
+.text-center{
+  margin-top: 40px;
+}
+
 
 
 /*                        Section 7                       */
@@ -322,3 +325,5 @@
     margin-top: 330vmin;
   }
 }
+
+
