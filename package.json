@@ -1,0 +1,26 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "![alt text](https://pdc.is/wp-content/uploads/2017/11/web-app-development.jpg) ## Introduction It's a weather app,where show the city's weather. It's also this city's time,humadity,wind speed,country code,weather description etc.This site have a blog,this blog shows weather article or report.Anybody can contact us from contact form.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehedimdasif/Portfolio-Website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+
+  },
+  "homepage": "",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.4",
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7"
+  }
+}
