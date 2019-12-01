@@ -1,128 +1,64 @@
-if(process.env.NODE_ENV !== 'production'){
-    require("dotenv").config();
-}
 const express = require('express');
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const bcrypt =require("bcryptjs");
-const flash = require("express-flash");
-const session = require("express-session");
-const override = require("method-override");
+const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
+
 const app = express();
-app.use(express.static("public"));
 
-const passportInitialize = require("./passport-config");
-passportInitialize(passport,
-     email => user_details.find(user => email === user.email),
-      id => user_details.find(user => id === user.id));
+// Passport Config
+require('./config/passport')(passport);
 
-app.use(flash());
-app.use(session({
-    secret: process.env.SECRETE_SESSION,
-    save: false,
-    resave: false,
-    saveUninitialized: false
-}));
+// DB Config
+const db = require('./config/keys').mongoURI;
 
+// Connect to MongoDB
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+
+// EJS
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-const user_details = [];
+// Connect flash
+app.use(flash());
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.set("view engine","ejs");
-app.use(override("_method"));
-
-app.get("/",(req,res)=>{
-    res.render("index");
-});
-app.get("/about",(req,res)=>{
-    res.render("about");
-});
-app.get("/blog",(req,res)=>{
-    res.render("blog");
-});
-app.get("/contact",(req,res)=>{
-    res.render("contact");
-});
-app.get("/portfolio-details",(req,res)=>{
-    res.render("portfolio-details");
-});
-app.get("/portfolio",(req,res)=>{
-    res.render("portfolio");
-});
-app.get("/services",(req,res)=>{
-    res.render("services");
-});
-app.get("/single-blog",(req,res)=>{
-    res.render("single-blog");
-});
-app.get("/single",(req,res)=>{
-    res.render("single");
-});
-app.get("/adminblog",(req,res)=>{
-    res.render("adminblog");
+// Global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
-
-app.get("/admin",checkNotAuth, (req,res)=>{
-    res.render("admin");
-});
-
-app.get("/registration",checkNotAuth,(req,res)=>{
-    res.render("registration");
-});
-
-app.get("/user",checkAuth,(req, res)=>{
-    res.render("user", {user_details: user_details});
-});
-
-app.post("/admin",checkNotAuth, passport.authenticate("local",{
-    successRedirect: "/user",
-    failureRedirect: "/admin",
-    failureFlash: true
-}));
-
-app.delete("/logout",(req, res)=>{
-    req.logout();
-    res.redirect('/admin');
-});
-
-app.post("/registration",checkNotAuth, async (req,res)=>{
-    try {
-        const hashPass = await bcrypt.hash(req.body.password, 10);
-        user_details.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            title: req.body.title,
-            email: req.body.email,
-            password:hashPass
-        });
-        res.redirect("/user");
-    } catch (error) {
-        res.redirect("/registration");
-    }
-    console.log(user_details);
-    
-});
-
-function checkAuth(req, res, next) {  
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/admin');
-}
-
-function checkNotAuth(req, res, next) {  
-    if(req.isAuthenticated()){
-        return res.redirect('/user');
-    }
-    next();
-}
+// Routes
+app.use('/', require('./routes/index.js'));
+app.use('/users', require('./routes/users.js'));
 
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8000;
-}
-app.listen(port);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
