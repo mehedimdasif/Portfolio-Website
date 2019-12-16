@@ -51,7 +51,7 @@ people get a total idea of a developer that, how capable he is.
 * **Week 16 - Submit Project**
 
 ## Live Demo
-I also upload my project in Github page
+I also upload my project in Heroku
 [Live Demo](https://infinite-sands-65068.herokuapp.com/)
 
 
