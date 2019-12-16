@@ -1,16 +1,12 @@
 //jshint esversion:8
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-  name: {
+const BlogSchema = new mongoose.Schema({
+  blogTitle: {
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
+  blog: {
     type: String,
     required: true
   },
@@ -20,6 +16,6 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', UserSchema);
+const Blog = mongoose.model('Blog', BlogSchema);
 
-module.exports = User;
+module.exports = Blog;

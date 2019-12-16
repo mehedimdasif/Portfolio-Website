@@ -4,7 +4,8 @@
   "description": "![alt text](https://pdc.is/wp-content/uploads/2017/11/web-app-development.jpg) ## Introduction It's a weather app,where show the city's weather. It's also this city's time,humadity,wind speed,country code,weather description etc.This site have a blog,this blog shows weather article or report.Anybody can contact us from contact form.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -12,19 +13,16 @@
   },
   "author": "",
   "license": "ISC",
-  "engines": {
-    "node": "12.13.1"
-  },
   "bugs": {},
   "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-ejs-layouts": "^2.5.0",
-    "express-session": "^1.15.6",
-    "mongoose": "^5.7.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.7.14",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   }
